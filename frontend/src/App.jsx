@@ -289,6 +289,12 @@ function App() {
 
   const headerContext = getHeaderContext();
 
+  const handleNavClick = () => {
+    if (window.innerWidth <= 768) {
+      setIsSidebarCollapsed(true);
+    }
+  };
+
   return (
     <div className="app-shell">
       {/* 1. TOPBAR HEADER */}
@@ -361,39 +367,40 @@ function App() {
             <NavLink
               to="/"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={() => setIsSidebarCollapsed(true)}
+              onClick={handleNavClick}
             >
               <FaChartBar /> <span>Dashboard</span>
             </NavLink>
             <NavLink
               to="/people"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={() => setIsSidebarCollapsed(true)}
+              onClick={handleNavClick}
             >
               <FaUsers /> <span>People</span>
             </NavLink>
             <NavLink
               to="/graph"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={() => setIsSidebarCollapsed(true)}
+              onClick={handleNavClick}
             >
               <FaNetworkWired /> <span>Network Explorer</span>
             </NavLink>
             <NavLink
               to="/pathfinder"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={() => setIsSidebarCollapsed(true)}
+              onClick={handleNavClick}
             >
               <FaRoute /> <span>Introduction Paths</span>
             </NavLink>
             <NavLink
               to="/recommendations"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={() => setIsSidebarCollapsed(true)}
+              onClick={handleNavClick}
             >
               <FaLightbulb /> <span>Recommendations</span>
             </NavLink>
           </nav>
+
 
 
           <div className="sidebar-footer">
