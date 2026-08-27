@@ -1,0 +1,13 @@
+# Node dependencies
+node_modules/
+dist/
+
+# Environment secrets
+backend/.env
+.env
+
+# IDE and system files
+.vscode/
+.idea/
+.DS_Store
+*.log
