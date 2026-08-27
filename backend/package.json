@@ -8,7 +8,6 @@
     "seed": "tsx src/seed.ts",
     "verify": "tsx src/test_queries.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
-
   },
   "keywords": [],
   "author": "",
