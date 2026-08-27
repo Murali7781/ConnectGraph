@@ -1,0 +1,104 @@
+/* Stats metrics widget */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-color: var(--accent-cyan);
+}
+
+.stat-info h3 {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  margin: 6px 0 0 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.stat-icon {
+  font-size: 24px;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dashboard Layout Grid */
+.dashboard-sections-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+/* Dashboard Hero Panel custom styling */
+.dashboard-hero-panel {
+  background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 24px 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-hero-panel h2 {
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.dashboard-hero-panel p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+  max-width: 600px;
+}
+
+/* Trending hub item list */
+.list-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-deep);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s;
+}
+
+.list-item-row:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-cyan);
+}
+
+@media (max-width: 768px) {
+  .dashboard-sections-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .dashboard-hero-panel {
+    padding: 20px;
+  }
+}

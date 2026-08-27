@@ -1,5 +1,7 @@
 import { FaUsers, FaLink, FaBullseye, FaCode, FaBuilding, FaHeart } from 'react-icons/fa';
 import GraphCanvas from '../components/GraphCanvas';
+import './Dashboard.css';
+
 
 export default function Dashboard({ stats, graphData, onOpenProfile, onExploreNetwork, onFindIntroduction }) {
   if (!stats) {

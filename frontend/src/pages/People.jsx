@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { FaSearch, FaUsers, FaUserCircle } from 'react-icons/fa';
+import './People.css';
+
 
 // Helper component for Person cards to handle offline image fallbacks using react-icons
 function PersonCard({ person, onOpenProfile }) {

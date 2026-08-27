@@ -1,0 +1,52 @@
+/* Egos & People lists */
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.person-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.person-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  border-color: var(--accent-cyan);
+}
+
+.card-header-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tag-skill {
+  background: var(--accent-cyan-glow);
+  color: var(--accent-cyan);
+}
+
+.tag-interest {
+  background: var(--accent-green-glow);
+  color: var(--accent-green);
+}

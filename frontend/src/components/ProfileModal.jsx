@@ -1,3 +1,5 @@
+import './ProfileModal.css';
+
 // Reusable Modal Component to show full Profile details & Matching Recommendations
 export default function ProfileModal({ isOpen, onClose, personId, personDetail, onOpenProfile }) {
   if (!isOpen) return null;
