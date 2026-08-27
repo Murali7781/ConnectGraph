@@ -343,9 +343,9 @@ function App() {
                 fontSize: '11px'
               }}
             >
-              AS
+              SC
             </div>
-            <span>Alex Smith ▾</span>
+            <span>Sunita Choudhury ▾</span>
           </div>
         </div>
       </header>
@@ -433,7 +433,7 @@ function App() {
                     fontSize: '11px'
                   }}
                 >
-                  AS
+                  SC
                 </div>
                 <span 
                   className={`status-indicator ${health?.connected ? 'status-connected' : 'status-disconnected'}`}
@@ -441,8 +441,8 @@ function App() {
                 />
               </div>
               <div style={{ textAlign: 'left' }} className="sidebar-footer-text">
-                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#ffffff' }}>Alex Smith</div>
-                <div style={{ fontSize: '10px', color: '#cbd5e1' }}>SaaS Admin</div>
+                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#ffffff' }}>Sunita Choudhury</div>
+                <div style={{ fontSize: '10px', color: '#cbd5e1' }}>ML Engineer</div>
               </div>
             </div>
           </div>
