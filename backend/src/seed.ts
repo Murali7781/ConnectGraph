@@ -276,9 +276,9 @@ export async function runSeed() {
     for (let i = 1; i <= 120; i++) {
       const fName = rng.choice(firstNames);
       const lName = rng.choice(lastNames);
-      const name = `${fName} ${lName}`;
-      const username = `${fName.toLowerCase()}_${lName.toLowerCase()}_${i}`;
-      const email = `${username}@example.com`;
+      const name = i === 1 ? "Murali Mahi" : `${fName} ${lName}`;
+      const username = i === 1 ? "murali_mahi" : `${fName.toLowerCase()}_${lName.toLowerCase()}_${i}`;
+      const email = i === 1 ? "murali_mahi@example.com" : `${username}@example.com`;
       
       const comm = communities[i % communities.length];
       if (!comm) {

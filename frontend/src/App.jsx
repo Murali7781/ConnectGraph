@@ -345,7 +345,7 @@ function App() {
             >
               SC
             </div>
-            <span>Sunita Choudhury ▾</span>
+            <span>Murali Mahi ▾</span>
           </div>
         </div>
       </header>
@@ -355,9 +355,9 @@ function App() {
 
       <div className="app-body">
         {/* Mobile Sidebar Overlay Backdrop */}
-        <div 
-          className={`sidebar-overlay ${!isSidebarCollapsed ? 'active' : ''}`} 
-          onClick={() => setIsSidebarCollapsed(true)} 
+        <div
+          className={`sidebar-overlay ${!isSidebarCollapsed ? 'active' : ''}`}
+          onClick={() => setIsSidebarCollapsed(true)}
         />
 
 
@@ -414,28 +414,28 @@ function App() {
               <FaCog /> <span className="sidebar-footer-text">{seeding ? 'Seeding...' : 'Reset & Seed'}</span>
             </button>
             {/* Profile footer avatar with dynamic health indicator dot */}
-            <div 
+            <div
               onClick={() => handleOpenProfile('person_1')}
               style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '8px', background: 'rgba(255,255,255,0.06)', borderRadius: '6px' }}
             >
               <div style={{ position: 'relative', display: 'inline-block', flexShrink: 0 }}>
-                <div 
-                  style={{ 
-                    width: '32px', 
-                    height: '32px', 
-                    borderRadius: '50%', 
-                    background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)', 
-                    color: '#ffffff', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    fontWeight: '700', 
+                <div
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
+                    color: '#ffffff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: '700',
                     fontSize: '11px'
                   }}
                 >
                   SC
                 </div>
-                <span 
+                <span
                   className={`status-indicator ${health?.connected ? 'status-connected' : 'status-disconnected'}`}
                   style={{ position: 'absolute', bottom: '-1px', right: '-1px', border: '1.5px solid #0f172a' }}
                 />

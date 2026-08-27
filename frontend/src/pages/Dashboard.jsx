@@ -32,7 +32,7 @@ export default function Dashboard({ stats, graphData, onOpenProfile, onExploreNe
     <div className="animate-fade-in">
       {/* Hero Intro banner */}
       <div className="dashboard-hero-panel">
-        <h2>Welcome back, Sunita! 👋</h2>
+        <h2>Welcome back, Murali! 👋</h2>
 
         <h2>Explore your network</h2>
         <p>Discover meaningful connections through people, interests, skills and communities in your graph database.</p>
