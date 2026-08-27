@@ -247,21 +247,22 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(15, 23, 42, 0.4);
-  backdrop-filter: blur(2px);
-  z-index: 90;
+  background: rgba(15, 23, 42, 0.6); /* Slightly darker backdrop for better readability */
+  backdrop-filter: blur(4px);
+  z-index: 999; /* Ensure it covers the topbar */
 }
 
 /* Responsive grid layout adaptations */
 @media (max-width: 768px) {
   .app-sidebar {
-    position: absolute;
+    position: fixed; /* Use fixed so it covers full viewport height cleanly */
     left: 0;
     top: 0;
     bottom: 0;
-    z-index: 100;
-    box-shadow: 10px 0 15px -3px rgba(0, 0, 0, 0.05);
+    z-index: 1000; /* Ensure it is on top of the overlay */
+    box-shadow: 10px 0 15px -3px rgba(0, 0, 0, 0.2);
   }
+
   .app-sidebar.collapsed {
     width: 0;
     padding: 0;

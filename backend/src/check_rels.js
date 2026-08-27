@@ -17,4 +17,3 @@ async function runCheck() {
     }
 }
 runCheck();
-//# sourceMappingURL=check_rels.js.map
