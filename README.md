@@ -1,4 +1,4 @@
-# ConnectGraph — Professional Graph Network & Traversal Explorer
+# ConnectGraph
 
 ConnectGraph is a relationship-driven social and professional networking application built for the Wexa AI take-home assignment. The project demonstrates how graph database queries map mutual connections, professional skill hubs, interest groups, and multi-hop introduction paths.
 
@@ -6,23 +6,56 @@ The application is backed by **CognoDB Cloud** (or a Neo4j-compatible instance) 
 
 ---
 
-## 1. Why a Graph Database for this Use Case?
+## Overview
+ConnectGraph allows users to explore:
+* **People**: Profiles of professionals in the network.
+* **Connections**: Direct relations between individuals.
+* **Interests**: Shared interest nodes connecting communities.
+* **Skills**: Specific professional capabilities linking members.
+* **Companies**: Affiliations showing where members work.
+* **Communities**: Groups and organizations.
+* **Introduction Paths**: Traversal chains showing how you can get introduced to someone.
+* **Recommendations**: Smart, similarity-based connection suggestions.
 
-In standard relational (SQL) databases, entities are stored in rigid tables (e.g. `People`, `Skills`, `Interests`), and relationships are mapped using intermediate join tables (e.g. `PersonSkills`, `PersonInterests`). 
+---
 
-As a result:
+## Features
+* **Interactive Graph Visualization**: Custom force-directed canvas rendering SVG graph representations.
+* **Multi-Hop Traversal**: Computes the shortest acquaintance paths between any two members.
+* **Similarity Recommendations**: Recommends new contacts using weighted graph overlaps.
+* **Robust Error Handling**: Dynamic UI fallback indicators when the database is offline.
+* **Responsive Layouts**: Optimizations for mobile, tablet, and desktop screens.
+
+---
+
+## Why a Graph Database?
+In standard relational (SQL) databases, entities are stored in rigid tables, and relationships require intermediate join tables. 
 * **Nested Joins**: Querying connection paths up to 4 hops deep (Origin → Person A → Person B → Target) requires multiple nested self-joins or recursive CTEs, degrading database read performance exponentially.
-* **Complex Recommendation Queries**: Writing a query to find people who share a company, community, skills, and interests requires multiple tables join and aggregations that relational databases find highly awkward.
+* **Complex Recommendations**: Writing a query to find people who share a company, community, skills, and interests requires multiple table joins and aggregations that relational databases find highly awkward.
 
 In **CognoDB** (using openCypher over the Bolt protocol):
 * **Index-Free Adjacency**: Relationships are stored as physical pointers directly on disk, eliminating runtime joins.
 * **Traversal Efficiency**: Finding connection pathways takes milliseconds since it hops between adjacent pointers in memory.
-* **Single-Statement Recommendations**: Similarity matching based on weighted overlays (shared skills, company, community, and mutual connections) is expressed clearly in a single query.
+* **Single-Statement Recommendations**: Similarity matching based on weighted overlays is expressed clearly in a single parameterized query.
 
 ---
 
-## 2. Graph Data Model
+## Technology Stack
+* **Frontend Client**: React (Vite) styled with clean modern cards, built on a modular SPA architecture.
+* **Backend Server**: Express with Node.js and TypeScript.
+* **Database Layer**: CognoDB Cloud queried using the official `neo4j-driver` over Bolt.
+* **Routing**: React Router v6.
 
+---
+
+## Architecture
+* **Frontend (Vercel)**: Single Page Application configured with SPA rewrites (`vercel.json`) to prevent 404 errors on page refreshes.
+* **Backend (Render)**: Express server serving REST endpoints (CORS enabled) that communicate with CognoDB.
+* **Database (CognoDB)**: Labeled nodes and typed relationships representing the professional social graph.
+
+---
+
+## Data Model
 The application models a professional network containing 6 distinct node labels and 6 relationship types.
 
 ### Schema Diagram
@@ -46,20 +79,20 @@ graph TD
 
 ---
 
-## 3. Technology Stack
-
-* **Frontend Client**: React (Vite), styled with clean white card interfaces, a light blue-gray workspace, and a dark blue gradient sidebar. Custom force-directed canvas renders interactive SVG graph representations dynamically using Verlet integration.
-* **Backend Server**: Express with Node.js and TypeScript.
-* **Database Layer**: CognoDB Cloud queried using the official `neo4j-driver` over Bolt.
-* **Visuals & Icons**: React Icons (`react-icons/fa`) for professional illustrations.
+## Graph Relationships
+The 6 relationship types mapped in the database:
+1. `WORKS_AT`: Connects a `Person` to a `Company`.
+2. `LIVES_IN`: Connects a `Person` to a `City`.
+3. `MEMBER_OF`: Connects a `Person` to a `Community`.
+4. `HAS_SKILL`: Connects a `Person` to a `Skill`.
+5. `HAS_INTEREST`: Connects a `Person` to an `Interest`.
+6. `KNOWS`: Connects a `Person` to another `Person` (contains properties: `since` [date], `strength` [integer], `relType` [Acquaintance/Colleague]).
 
 ---
 
-## 4. Key openCypher Queries Explained
+## Main Cypher Queries
 
-The primary queries executed in [`server.ts`](backend/src/server.ts) are:
-
-### A. Multi-Hop Shortest Pathfinder (Query 5)
+### Multi-hop Introduction Path
 Retrieves the shortest path of acquaintance (up to 4 hops deep) between two individuals:
 ```cypher
 MATCH (start:Person {id: $from})
@@ -68,8 +101,8 @@ MATCH path = shortestPath((start)-[:KNOWS*..4]-(target))
 RETURN path
 ```
 
-### B. Weighted similarity recommendations
-Generates connection recommendations, prioritizing shared nodes and mutual friend connections (Company: +3, Community: +2, Interest: +5, Skill: +3, Mutual connection: +4):
+### Recommendations
+Generates connection recommendations, prioritizing shared nodes and mutual connections (Company: +3, Community: +2, Interest: +5, Skill: +3, Mutual connection: +4):
 ```cypher
 MATCH (p:Person {id: $id})
 MATCH (other:Person)
@@ -102,54 +135,90 @@ LIMIT 6
 
 ---
 
-## 5. Setup & Run Instructions
+## Project Structure
+```text
+ConnectGraph/
+├── backend/
+│   ├── src/
+│   │   ├── db.ts             # Database connection logic
+│   │   ├── seed.ts           # Seeding script
+│   │   ├── server.ts         # REST API endpoints
+│   │   └── test_queries.ts   # Verification script
+│   └── package.json
+├── frontend/
+│   ├── src/                  # React source files
+│   ├── vercel.json           # Client routing configuration
+│   └── package.json
+└── README.md
+```
 
-### Set up CognoDB Cloud
-1. Go to [console.cognodb.com](https://console.cognodb.com/signup) and create a free account.
-2. Spin up a free database instance and download the credentials.
-3. Save the connection details in the backend configuration.
+---
 
-### Run Locally
+## Setup
 
-1. **Install Dependencies**:
-   ```bash
-   # Backend
-   cd backend
-   npm install
+### CognoDB Setup
+1. Create a free account at [console.cognodb.com](https://console.cognodb.com).
+2. Spin up a free database instance.
+3. Download the connection credentials file.
 
-   # Frontend
-   cd ../frontend
-   npm install
-   ```
+### Environment Variables
+Create a `.env` file inside the `backend/` directory:
+```env
+COGNODB_URI=bolt+s://<instance-id>.databases.cognodb.cloud
+COGNODB_PASSWORD=<your-generated-password>
+PORT=5000
+```
+Create an environment variable in **Vercel** for the frontend:
+```env
+VITE_API_BASE=https://connectgraph-5.onrender.com/api
+```
 
-2. **Configure Environment Variables**:
-   Create a `.env` file inside the `backend/` directory:
-   ```env
-   COGNODB_URI=bolt+s://<instance-id>.databases.cognodb.cloud
-   COGNODB_PASSWORD=<your-generated-password>
-   PORT=5000
-   ```
-   *Note: `backend/.env` is ignored in `.gitignore` to prevent secret exposure.*
+### Backend Setup
+```bash
+cd backend
+npm install
+```
 
-3. **Seed Database**:
-   ```bash
-   cd backend
-   npm run seed
-   ```
+### Seed Data
+Seed the database with realistic people, interests, and relationship nodes:
+```bash
+cd backend
+npm run seed
+```
 
-4. **Verify Queries**:
-   Run the verification validation query:
-   ```bash
-   cd backend
-   npm run verify
-   ```
+### Frontend Setup
+```bash
+cd ../frontend
+npm install
+```
 
-5. **Start Dev Servers**:
-   ```bash
-   # In backend/ directory
-   npm run dev
+---
 
-   # In frontend/ directory
-   npm run dev
-   ```
-   Navigate your browser to `http://localhost:5173`.
+## Screenshots
+Please check the root `screenshots/` directory for full-resolution captures:
+1. **Dashboard**: View overall statistics and a snapshot of your network.
+2. **People Discovery**: Search directory, filter by skill, interest, or community.
+3. **Network Explorer**: Interactive force-directed canvas.
+4. **Introduction Paths**: Traversal path tracer.
+5. **Recommendations**: Similarity connection suggestions.
+
+---
+
+## Live Demo
+* **Frontend**: [Vercel Deployment Link](https://frontend-ecru-nine-49.vercel.app/)
+* **Backend**: [Render Deployment URL](https://connectgraph-5.onrender.com/api/people)
+
+---
+
+## Verification / Testing
+To run the query suite check:
+```bash
+cd backend
+npm run verify
+```
+
+---
+
+## Submission Notes
+* All Neo4j driver queries are fully parameterized.
+* Frontend layout features responsive design optimizations for mobile (320px) to desktop (1920px+).
