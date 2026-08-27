@@ -195,12 +195,22 @@ npm install
 ---
 
 ## Screenshots
-Please check the root `screenshots/` directory for full-resolution captures:
-1. **Dashboard**: View overall statistics and a snapshot of your network.
-2. **People Discovery**: Search directory, filter by skill, interest, or community.
-3. **Network Explorer**: Interactive force-directed canvas.
-4. **Introduction Paths**: Traversal path tracer.
-5. **Recommendations**: Similarity connection suggestions.
+
+### Dashboard
+![ConnectGraph Dashboard](screenshots/dashboard.png)
+
+### People Discovery
+![People Discovery](screenshots/people.png)
+
+### Network Explorer
+![Network Explorer](screenshots/network-explorer.png)
+
+### Introduction Paths
+![Introduction Paths](screenshots/introduction-paths.png)
+
+### Recommendations
+![Recommendations](screenshots/recommendations.png)
+
 
 ---
 

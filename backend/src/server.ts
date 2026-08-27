@@ -152,14 +152,19 @@ app.get('/api/people', checkDbConnection, async (req: Request, res: Response) =>
   const { name = '', skill = '', interest = '', company = '', city = '', community = '' } = req.query;
 
   if (isFallbackMode()) {
+    const hasActiveFilters = !!(company || city || community || skill || interest);
     const filtered = people.filter(p => {
       const matchName = !name || p.name.toLowerCase().includes((name as string).toLowerCase());
-      const matchCompany = !company || p.company.toLowerCase().includes((company as string).toLowerCase());
-      const matchCity = !city || p.city.toLowerCase().includes((city as string).toLowerCase());
-      const matchCommunity = !community || p.community.toLowerCase().includes((community as string).toLowerCase());
-      const matchSkill = !skill || p.skills.some((s: string) => s.toLowerCase().includes((skill as string).toLowerCase()));
-      const matchInterest = !interest || p.interests.some((i: string) => i.toLowerCase().includes((interest as string).toLowerCase()));
-      return matchName && matchCompany && matchCity && matchCommunity && matchSkill && matchInterest;
+      if (!matchName) return false;
+      if (!hasActiveFilters) return true;
+
+      const matchCompany = company && p.company.toLowerCase().includes((company as string).toLowerCase());
+      const matchCity = city && p.city.toLowerCase().includes((city as string).toLowerCase());
+      const matchCommunity = community && p.community.toLowerCase().includes((community as string).toLowerCase());
+      const matchSkill = skill && p.skills.some((s: string) => s.toLowerCase().includes((skill as string).toLowerCase()));
+      const matchInterest = interest && p.interests.some((i: string) => i.toLowerCase().includes((interest as string).toLowerCase()));
+
+      return matchCompany || matchCity || matchCommunity || matchSkill || matchInterest;
     });
     res.json(filtered.slice(0, 100));
     return;
@@ -177,11 +182,19 @@ app.get('/api/people', checkDbConnection, async (req: Request, res: Response) =>
        OPTIONAL MATCH (p)-[:HAS_SKILL]->(sk:Skill)
        OPTIONAL MATCH (p)-[:HAS_INTEREST]->(int:Interest)
        WITH p, co, ci, comm, collect(DISTINCT sk.name) AS skills, collect(DISTINCT int.name) AS interests
-       WHERE ($company = "" OR toLower(co.name) CONTAINS toLower($company))
-         AND ($city = "" OR toLower(ci.name) CONTAINS toLower($city))
-         AND ($community = "" OR toLower(comm.name) CONTAINS toLower($community))
-         AND ($skill = "" OR any(s IN skills WHERE toLower(s) CONTAINS toLower($skill)))
-         AND ($interest = "" OR any(i IN interests WHERE toLower(i) CONTAINS toLower($interest)))
+       WHERE (
+         ($company = "" AND $city = "" AND $community = "" AND $skill = "" AND $interest = "")
+         OR
+         ($company <> "" AND toLower(co.name) CONTAINS toLower($company))
+         OR
+         ($city <> "" AND toLower(ci.name) CONTAINS toLower($city))
+         OR
+         ($community <> "" AND toLower(comm.name) CONTAINS toLower($community))
+         OR
+         ($skill <> "" AND any(s IN skills WHERE toLower(s) CONTAINS toLower($skill)))
+         OR
+         ($interest <> "" AND any(i IN interests WHERE toLower(i) CONTAINS toLower($interest)))
+       )
        RETURN p {.*, company: co.name, city: ci.name, community: comm.name, skills: skills, interests: interests} AS person
        ORDER BY p.name ASC
        LIMIT 100`,
