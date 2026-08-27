@@ -273,7 +273,7 @@ function App() {
   const getHeaderContext = () => {
     switch (location.pathname) {
       case '/':
-        return { title: 'Good afternoon, Alex', desc: 'Explore your network and discover meaningful connections.' };
+        return { title: 'Good afternoon, Murali', desc: 'Explore your network and discover meaningful connections.' };
       case '/people':
         return { title: 'People Discovery', desc: 'Find people through shared interests, skills and connections.' };
       case '/graph':
@@ -343,7 +343,7 @@ function App() {
                 fontSize: '11px'
               }}
             >
-              SC
+              MM
             </div>
             <span>Murali Mahi ▾</span>
           </div>
@@ -433,7 +433,7 @@ function App() {
                     fontSize: '11px'
                   }}
                 >
-                  SC
+                  MM
                 </div>
                 <span
                   className={`status-indicator ${health?.connected ? 'status-connected' : 'status-disconnected'}`}
@@ -441,7 +441,7 @@ function App() {
                 />
               </div>
               <div style={{ textAlign: 'left' }} className="sidebar-footer-text">
-                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#ffffff' }}>Sunita Choudhury</div>
+                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#ffffff' }}>Murali Mahi</div>
                 <div style={{ fontSize: '10px', color: '#cbd5e1' }}>ML Engineer</div>
               </div>
             </div>
