@@ -19,8 +19,8 @@ export default function Pathfinder({
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '16px' }}>
             <div className="form-group">
               <label>From</label>
-              <select 
-                value={fromPersonId} 
+              <select
+                value={fromPersonId}
                 onChange={e => setFromPersonId(e.target.value)}
                 style={{ width: '100%', padding: '10px', background: 'var(--bg-deep)', color: 'var(--text-primary)', border: '1px solid var(--border-color)', borderRadius: '6px' }}
               >
@@ -30,11 +30,11 @@ export default function Pathfinder({
                 ))}
               </select>
             </div>
-            
+
             <div className="form-group">
               <label>To</label>
-              <select 
-                value={toPersonId} 
+              <select
+                value={toPersonId}
                 onChange={e => setToPersonId(e.target.value)}
                 style={{ width: '100%', padding: '10px', background: 'var(--bg-deep)', color: 'var(--text-primary)', border: '1px solid var(--border-color)', borderRadius: '6px' }}
               >
@@ -46,10 +46,10 @@ export default function Pathfinder({
             </div>
           </div>
 
-          <button 
-            type="submit" 
-            className="btn-primary" 
-            style={{ width: '100%' }} 
+          <button
+            type="submit"
+            className="btn-primary"
+            style={{ width: '100%' }}
             disabled={pathLoading || !fromPersonId || !toPersonId || fromPersonId === toPersonId}
           >
             {pathLoading ? 'Traversing graph...' : 'Find Introduction'}
@@ -69,7 +69,7 @@ export default function Pathfinder({
       {/* Path result card views - Mockup 5 */}
       {!pathLoading && pathResult && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          
+
           <div className="panel animate-fade-in" style={{ background: 'var(--bg-card)' }}>
             {pathResult.pathFound ? (
               <div>
@@ -81,15 +81,15 @@ export default function Pathfinder({
                 <div className="pathfinder-preview-chain" style={{ marginBottom: '24px' }}>
                   {pathResult.nodes.map((node, idx) => (
                     <div key={node.id} style={{ display: 'flex', alignItems: 'center' }}>
-                      <div 
-                        className="pathfinder-node-circle" 
+                      <div
+                        className="pathfinder-node-circle"
                         onClick={() => onOpenProfile(node.id)}
                         style={{ cursor: 'pointer' }}
                         title={`${node.name} (${node.role})`}
                       >
                         {node.name.split(' ').map((n) => n[0]).join('')}
                       </div>
-                      
+
                       {idx < pathResult.edges.length && (
                         <div className="pathfinder-edge-line">
                           <span className="pathfinder-edge-label">
@@ -112,7 +112,7 @@ export default function Pathfinder({
                         return (
                           <div key={idx} className="list-item-row" style={{ padding: '12px 16px', fontSize: '13px' }}>
                             <div>
-                              <strong>{idx + 1}. {sNode?.name}</strong> knows <strong>{tNode?.name}</strong> 
+                              <strong>{idx + 1}. {sNode?.name}</strong> knows <strong>{tNode?.name}</strong>
                               <span style={{ marginLeft: '6px', color: 'var(--accent-cyan)' }}>
                                 ({edge.relationshipType})
                               </span>
