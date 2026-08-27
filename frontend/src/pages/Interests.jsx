@@ -1,3 +1,5 @@
+import './Interests.css';
+
 export default function Interests({
   interests,
   selectedInterest,

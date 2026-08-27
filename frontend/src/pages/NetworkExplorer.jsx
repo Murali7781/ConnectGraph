@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import GraphCanvas from '../components/GraphCanvas';
+import './NetworkExplorer.css';
+
 
 export default function NetworkExplorer({
   graphData,
@@ -118,7 +120,7 @@ export default function NetworkExplorer({
   return (
     <div className="graph-explorer-layout animate-fade-in">
       {/* Left Explorer controls sidebar - Mockup 4 */}
-      <div className="panel" style={{ width: '280px', flexShrink: '0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div className="panel explorer-sidebar">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 style={{ margin: '0', fontSize: '15px', fontWeight: '600' }}>Search & Filter</h3>
           <button 
@@ -203,8 +205,8 @@ export default function NetworkExplorer({
       </div>
 
       {/* Graph display canvas panel */}
-      <div style={{ flexGrow: 1, display: 'flex', gap: '16px', height: '600px' }}>
-        <div className="panel" style={{ flexGrow: 1, padding: '0', position: 'relative', overflow: 'hidden' }}>
+      <div className="graph-container-wrapper">
+        <div className="panel canvas-panel">
           {graphLoading ? (
             <div className="graph-overlay-status">
               Fetching network graph...
@@ -223,19 +225,8 @@ export default function NetworkExplorer({
         </div>
 
         {/* Collapsible details sidebar */}
-        <div 
-          className="panel" 
-          style={{ 
-            width: selectedNode ? '320px' : '0px', 
-            opacity: selectedNode ? 1 : 0, 
-            padding: selectedNode ? '20px' : '0px',
-            overflow: 'hidden', 
-            transition: 'all 0.3s ease',
-            flexShrink: 0,
-            display: 'flex',
-            flexDirection: 'column'
-          }}
-        >
+        <div className={`panel collapsible-details-panel ${!selectedNode ? 'collapsed' : ''}`}>
+
           {selectedNode && (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px', marginBottom: '16px' }}>
