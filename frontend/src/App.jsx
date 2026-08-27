@@ -344,42 +344,57 @@ function App() {
         </div>
       </header>
 
+
       {/* 2. BODY GRID */}
+
       <div className="app-body">
+        {/* Mobile Sidebar Overlay Backdrop */}
+        <div 
+          className={`sidebar-overlay ${!isSidebarCollapsed ? 'active' : ''}`} 
+          onClick={() => setIsSidebarCollapsed(true)} 
+        />
+
+
         {/* Left Navigation Sidebar */}
         <aside className={`app-sidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
           <nav className="nav-links-list">
             <NavLink
               to="/"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
+              onClick={() => setIsSidebarCollapsed(true)}
             >
               <FaChartBar /> <span>Dashboard</span>
             </NavLink>
             <NavLink
               to="/people"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
+              onClick={() => setIsSidebarCollapsed(true)}
             >
               <FaUsers /> <span>People</span>
             </NavLink>
             <NavLink
               to="/graph"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
+              onClick={() => setIsSidebarCollapsed(true)}
             >
               <FaNetworkWired /> <span>Network Explorer</span>
             </NavLink>
             <NavLink
               to="/pathfinder"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
+              onClick={() => setIsSidebarCollapsed(true)}
             >
               <FaRoute /> <span>Introduction Paths</span>
             </NavLink>
             <NavLink
               to="/recommendations"
               className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
+              onClick={() => setIsSidebarCollapsed(true)}
             >
               <FaLightbulb /> <span>Recommendations</span>
             </NavLink>
           </nav>
+
 
           <div className="sidebar-footer">
             {/* Bottom Actions */}

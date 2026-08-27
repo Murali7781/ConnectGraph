@@ -587,6 +587,26 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Dashboard sections grid layout */
+.dashboard-sections-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+/* Sidebar Overlay Backdrop on Mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 90;
+}
+
 /* Responsive grid layout adaptations */
 @media (max-width: 768px) {
   .app-sidebar {
@@ -603,7 +623,49 @@ body {
     overflow: hidden;
     border-right: none;
   }
+  
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  .dashboard-sections-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .topbar-search {
+    display: none !important;
+  }
+
+  .page-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .page-content {
+    padding: 20px;
+  }
+
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .modal-details-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .modal-profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 }
+
 
 /* Global Form Input and Select Theme overrides */
 input, select, textarea {
