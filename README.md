@@ -23,7 +23,7 @@ In **CognoDB** (using openCypher over the Bolt protocol):
 
 ## 2. Graph Data Model
 
-The application models a professional network containing 6 distinct node labels and 5 relationship types.
+The application models a professional network containing 6 distinct node labels and 6 relationship types.
 
 ### Schema Diagram
 
@@ -125,7 +125,7 @@ LIMIT 6
 2. **Configure Environment Variables**:
    Create a `.env` file inside the `backend/` directory:
    ```env
-   COGNODB_URI=bolt+s://<instance-id>.databases.cognodb.com
+   COGNODB_URI=bolt+s://<instance-id>.databases.cognodb.cloud
    COGNODB_PASSWORD=<your-generated-password>
    PORT=5000
    ```
