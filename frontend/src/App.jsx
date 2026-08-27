@@ -13,7 +13,7 @@ import Recommendations from './pages/Recommendations';
 // Modular Components
 import ProfileModal from './components/ProfileModal';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
 
 function App() {
   const navigate = useNavigate();
