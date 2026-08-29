@@ -211,6 +211,9 @@ npm install
 ### Recommendations
 ![Recommendations](screenshots/recommendations.png)
 
+### Profile Details (Smart Connections Match)
+![Profile Details](screenshots/profile-details.png)
+
 
 ---
 
