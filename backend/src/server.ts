@@ -95,7 +95,7 @@ app.get('/api/stats', checkDbConnection, async (req: Request, res: Response) => 
   const driver = getDriver();
   const session = driver.session();
   try {
-    const countsPromise = session.run(`
+    const countsRes = await session.run(`
       CALL { MATCH (p:Person) RETURN count(p) AS pCount }
       CALL { MATCH (i:Interest) RETURN count(i) AS iCount }
       CALL { MATCH (s:Skill) RETURN count(s) AS sCount }
@@ -107,7 +107,7 @@ app.get('/api/stats', checkDbConnection, async (req: Request, res: Response) => 
     `);
 
     // Most connected people
-    const topPeoplePromise = session.run(`
+    const topPeopleRes = await session.run(`
       MATCH (p:Person)-[:KNOWS]-(other:Person)
       RETURN p.id AS id, p.name AS name, count(DISTINCT other) AS degree
       ORDER BY degree DESC
@@ -115,18 +115,12 @@ app.get('/api/stats', checkDbConnection, async (req: Request, res: Response) => 
     `);
 
     // Most popular interests
-    const topInterestsPromise = session.run(`
+    const topInterestsRes = await session.run(`
       MATCH (i:Interest)<-[:HAS_INTEREST]-(p:Person)
       RETURN i.id AS id, i.name AS name, count(p) AS count
       ORDER BY count DESC
       LIMIT 5
     `);
-
-    const [countsRes, topPeopleRes, topInterestsRes] = await Promise.all([
-      countsPromise,
-      topPeoplePromise,
-      topInterestsPromise
-    ]);
 
     const countsRecord = countsRes.records[0];
 
