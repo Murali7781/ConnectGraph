@@ -3,7 +3,7 @@ import GraphCanvas from '../components/GraphCanvas';
 import './Dashboard.css';
 
 
-export default function Dashboard({ stats, graphData, onOpenProfile, onExploreNetwork, onFindIntroduction }) {
+export default function Dashboard({ stats, graphData, onOpenProfile, onExploreNetwork, onFindIntroduction, greeting }) {
   if (!stats) {
     return (
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', margin: '24px 0' }}>
@@ -32,7 +32,7 @@ export default function Dashboard({ stats, graphData, onOpenProfile, onExploreNe
     <div className="animate-fade-in">
       {/* Hero Intro banner */}
       <div className="dashboard-hero-panel">
-        <h2>Welcome back, Murali! 👋</h2>
+        <h2>{greeting || 'Welcome back, Murali'}! 👋</h2>
 
         <h2>Explore your network</h2>
         <p>Discover meaningful connections through people, interests, skills and communities in your graph database.</p>

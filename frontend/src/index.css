@@ -1,26 +1,26 @@
 :root {
-  --bg-deep: #F8FAFC;
+  --bg-deep: #F3F2EF;
   --bg-card: #FFFFFF;
   --bg-card-hover: #F8FAFC;
-  --text-primary: #111827;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
-  --border-color: #E2E8F0;
-  --accent-cyan: #6366F1; /* Primary brand purple */
-  --accent-cyan-glow: rgba(99, 102, 241, 0.08);
-  --accent-purple: #8B5CF6; /* Secondary purple */
-  --accent-light-purple: #EEF2FF;
-  --accent-green: #10B981;
-  --accent-green-glow: rgba(16, 185, 129, 0.08);
-  --accent-red: #EF4444;
-  --accent-red-glow: rgba(239, 68, 68, 0.08);
-  --accent-warning: #F59E0B;
-  --sidebar-bg: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #0f172a 100%);
-  --sidebar-hover: rgba(255, 255, 255, 0.08);
-  --sidebar-active: rgba(255, 255, 255, 0.16);
-  --sidebar-active-text: #ffffff;
-  --sans-font: 'Inter', system-ui, -apple-system, sans-serif;
-  --transition-speed: 0.2s;
+  --text-primary: rgba(0, 0, 0, 0.9);
+  --text-secondary: rgba(0, 0, 0, 0.6);
+  --text-muted: rgba(0, 0, 0, 0.45);
+  --border-color: #E0E0E0;
+  --accent-cyan: #0A66C2; /* LinkedIn Blue */
+  --accent-cyan-glow: rgba(10, 102, 194, 0.08);
+  --accent-purple: #70b5f9; 
+  --accent-light-purple: #EBF4FE;
+  --accent-green: #057642; /* LinkedIn Green */
+  --accent-green-glow: rgba(5, 118, 66, 0.08);
+  --accent-red: #D11124;
+  --accent-red-glow: rgba(209, 17, 36, 0.08);
+  --accent-warning: #C37D16;
+  --sidebar-bg: #FFFFFF;
+  --sidebar-hover: #F3F2EF;
+  --sidebar-active: #EBF4FE;
+  --sidebar-active-text: #0A66C2;
+  --sans-font: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', sans-serif;
+  --transition-speed: 0.15s;
 }
 
 body {
@@ -37,15 +37,15 @@ body {
 .panel {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
   transition: box-shadow var(--transition-speed);
 }
 
 .panel:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .panel-title {
@@ -61,49 +61,57 @@ body {
   background: var(--accent-cyan);
   color: #ffffff;
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  padding: 8px 16px;
+  border-radius: 24px;
   font-weight: 600;
   cursor: pointer;
-  font-size: 13px;
-  transition: opacity 0.2s;
+  font-size: 14px;
+  transition: background-color var(--transition-speed);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .btn-primary:hover {
-  opacity: 0.95;
+  background: #004182;
 }
 
 .btn-secondary {
-  background: var(--bg-deep);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan);
   padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 500;
+  border-radius: 24px;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 13px;
-  transition: background-color 0.2s;
+  font-size: 14px;
+  transition: all var(--transition-speed);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .btn-secondary:hover {
-  background: var(--border-color);
+  background: rgba(10, 102, 194, 0.06);
+  border-width: 1px;
 }
 
 .btn-seed {
-  background: var(--accent-red-glow);
-  color: var(--accent-red);
-  border: 1px solid var(--accent-red);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 11px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--text-secondary);
+  padding: 6px 16px;
+  border-radius: 24px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-speed);
 }
 
 .btn-seed:hover {
-  background: var(--accent-red);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.04);
 }
 
 /* Status Indicator */

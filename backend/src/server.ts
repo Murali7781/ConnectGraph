@@ -95,34 +95,47 @@ app.get('/api/stats', checkDbConnection, async (req: Request, res: Response) => 
   const driver = getDriver();
   const session = driver.session();
   try {
-    const pCount = await session.run("MATCH (p:Person) RETURN count(p) AS count");
-    const iCount = await session.run("MATCH (i:Interest) RETURN count(i) AS count");
-    const sCount = await session.run("MATCH (s:Skill) RETURN count(s) AS count");
-    const cCount = await session.run("MATCH (c:Company) RETURN count(c) AS count");
-    const cityCount = await session.run("MATCH (c:City) RETURN count(c) AS count");
-    const commCount = await session.run("MATCH (c:Community) RETURN count(c) AS count");
-    const knowsCount = await session.run("MATCH ()-[r:KNOWS]->() RETURN count(r) AS count");
+    const countsPromise = session.run(`
+      CALL { MATCH (p:Person) RETURN count(p) AS pCount }
+      CALL { MATCH (i:Interest) RETURN count(i) AS iCount }
+      CALL { MATCH (s:Skill) RETURN count(s) AS sCount }
+      CALL { MATCH (c:Company) RETURN count(c) AS cCount }
+      CALL { MATCH (ci:City) RETURN count(ci) AS cityCount }
+      CALL { MATCH (comm:Community) RETURN count(comm) AS commCount }
+      CALL { MATCH ()-[r:KNOWS]->() RETURN count(r) AS knowsCount }
+      RETURN pCount, iCount, sCount, cCount, cityCount, commCount, knowsCount
+    `);
 
     // Most connected people
-    const topPeopleRes = await session.run(`
+    const topPeoplePromise = session.run(`
       MATCH (p:Person)-[:KNOWS]-(other:Person)
       RETURN p.id AS id, p.name AS name, count(DISTINCT other) AS degree
       ORDER BY degree DESC
       LIMIT 5
     `);
+
+    // Most popular interests
+    const topInterestsPromise = session.run(`
+      MATCH (i:Interest)<-[:HAS_INTEREST]-(p:Person)
+      RETURN i.id AS id, i.name AS name, count(p) AS count
+      ORDER BY count DESC
+      LIMIT 5
+    `);
+
+    const [countsRes, topPeopleRes, topInterestsRes] = await Promise.all([
+      countsPromise,
+      topPeoplePromise,
+      topInterestsPromise
+    ]);
+
+    const countsRecord = countsRes.records[0];
+
     const topConnectedPeople = topPeopleRes.records.map(rec => ({
       id: rec.get('id'),
       name: rec.get('name'),
       connections: rec.get('degree').toNumber()
     }));
 
-    // Most popular interests
-    const topInterestsRes = await session.run(`
-      MATCH (i:Interest)<-[:HAS_INTEREST]-(p:Person)
-      RETURN i.id AS id, i.name AS name, count(p) AS count
-      ORDER BY count DESC
-      LIMIT 5
-    `);
     const topInterests = topInterestsRes.records.map(rec => ({
       id: rec.get('id'),
       name: rec.get('name'),
@@ -130,13 +143,13 @@ app.get('/api/stats', checkDbConnection, async (req: Request, res: Response) => 
     }));
 
     res.json(toNative({
-      people: getNumber(pCount.records[0]?.get('count')),
-      interests: getNumber(iCount.records[0]?.get('count')),
-      skills: getNumber(sCount.records[0]?.get('count')),
-      companies: getNumber(cCount.records[0]?.get('count')),
-      cities: getNumber(cityCount.records[0]?.get('count')),
-      communities: getNumber(commCount.records[0]?.get('count')),
-      connections: getNumber(knowsCount.records[0]?.get('count')),
+      people: getNumber(countsRecord?.get('pCount')),
+      interests: getNumber(countsRecord?.get('iCount')),
+      skills: getNumber(countsRecord?.get('sCount')),
+      companies: getNumber(countsRecord?.get('cCount')),
+      cities: getNumber(countsRecord?.get('cityCount')),
+      communities: getNumber(countsRecord?.get('commCount')),
+      connections: getNumber(countsRecord?.get('knowsCount')),
       topConnectedPeople,
       topInterests
     }));

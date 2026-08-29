@@ -269,11 +269,22 @@ function App() {
     fetchGraphData();
   }, [graphFilterType, graphFilterId]);
 
+  const getDynamicGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) {
+      return 'Good morning';
+    } else if (hour >= 12 && hour < 17) {
+      return 'Good afternoon';
+    } else {
+      return 'Good evening';
+    }
+  };
+
   // Page Header contexts
   const getHeaderContext = () => {
     switch (location.pathname) {
       case '/':
-        return { title: 'Good afternoon, Murali', desc: 'Explore your network and discover meaningful connections.' };
+        return { title: `${getDynamicGreeting()}, Murali`, desc: 'Explore your network and discover meaningful connections.' };
       case '/people':
         return { title: 'People Discovery', desc: 'Find people through shared interests, skills and connections.' };
       case '/graph':
@@ -486,6 +497,7 @@ function App() {
                       onOpenProfile={handleOpenProfile}
                       onExploreNetwork={() => navigate('/graph')}
                       onFindIntroduction={() => navigate('/pathfinder')}
+                      greeting={`${getDynamicGreeting()}, Murali`}
                     />
                   }
                 />
