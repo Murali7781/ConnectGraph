@@ -250,7 +250,7 @@ app.get('/api/people/:id', checkDbConnection, async (req: Request, res: Response
   const driver = getDriver();
   const session = driver.session();
   try {
-     const personRes = await session.run(
+    const personRes = await session.run(
       `MATCH (p:Person {id: $id})
        OPTIONAL MATCH (p)-[:WORKS_AT]->(co:Company)
        OPTIONAL MATCH (p)-[:LIVES_IN]->(ci:City)
@@ -260,12 +260,12 @@ app.get('/api/people/:id', checkDbConnection, async (req: Request, res: Response
        WITH p, co, ci, comm, collect(DISTINCT sk.name) AS skills, collect(DISTINCT int.name) AS interests
        RETURN p {.*, company: co.name, city: ci.name, community: comm.name, skills: skills, interests: interests} AS person`,
       { id }
-     );
-     const person = personRes.records[0]?.get('person');
-     if (!person) {
-       res.status(404).json({ error: "Person not found" });
-       return;
-     }
+    );
+    const person = personRes.records[0]?.get('person');
+    if (!person) {
+      res.status(404).json({ error: "Person not found" });
+      return;
+    }
 
     // Get direct connections
     const connRes = await session.run(
@@ -344,7 +344,7 @@ app.get('/api/people/:id/recommendations', checkDbConnection, async (req: Reques
         const interestScore = sharedInterests.length * 5;
         const sharedSkills = p.skills.filter((s: string) => other.skills.includes(s));
         const skillScore = sharedSkills.length * 3;
-        
+
         const otherDirectIds = new Set(knowsLinks.filter(k => k.p1 === other.id || k.p2 === other.id).map(k => k.p1 === other.id ? k.p2 : k.p1));
         const mutualNames = [...directIds].filter(x => otherDirectIds.has(x)).map(x => people.find(z => z.id === x)?.name).filter(Boolean);
         const mutualScore = mutualNames.length * 4;
@@ -465,7 +465,7 @@ app.get('/api/path', checkDbConnection, async (req: Request, res: Response) => {
     const pathEdges = [];
     for (let i = 0; i < foundPath.length - 1; i++) {
       const u1Id = foundPath[i]!;
-      const u2Id = foundPath[i+1]!;
+      const u2Id = foundPath[i + 1]!;
       const link = knowsLinks.find(k => (k.p1 === u1Id && k.p2 === u2Id) || (k.p2 === u1Id && k.p1 === u2Id));
       const u1 = people.find(p => p.id === u1Id);
       const u2 = people.find(p => p.id === u2Id);
