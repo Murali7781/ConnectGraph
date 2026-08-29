@@ -12,6 +12,7 @@ import Recommendations from './pages/Recommendations';
 
 // Modular Components
 import ProfileModal from './components/ProfileModal';
+import Sidebar from './components/Sidebar/Sidebar';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
 
@@ -311,6 +312,9 @@ function App() {
       {/* 1. TOPBAR HEADER */}
       <header className="app-topbar">
         <div className="topbar-left">
+          <button className="sidebar-toggle-btn" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
+            <FaBars />
+          </button>
           <div className="topbar-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
             <FaNetworkWired style={{ color: 'var(--accent-cyan)' }} />
             <span>ConnectGraph</span>
@@ -328,29 +332,6 @@ function App() {
             />
           </div>
         </div>
-
-        <nav className="topbar-nav">
-          <NavLink to="/" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
-            <FaChartBar className="nav-icon" />
-            <span className="nav-label">Home</span>
-          </NavLink>
-          <NavLink to="/people" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
-            <FaUsers className="nav-icon" />
-            <span className="nav-label">People</span>
-          </NavLink>
-          <NavLink to="/graph" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
-            <FaNetworkWired className="nav-icon" />
-            <span className="nav-label">Explorer</span>
-          </NavLink>
-          <NavLink to="/pathfinder" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
-            <FaRoute className="nav-icon" />
-            <span className="nav-label">Paths</span>
-          </NavLink>
-          <NavLink to="/recommendations" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
-            <FaLightbulb className="nav-icon" />
-            <span className="nav-label">Smart Recs</span>
-          </NavLink>
-        </nav>
 
         <div className="topbar-actions">
           <button
@@ -399,6 +380,22 @@ function App() {
       {/* 2. BODY GRID */}
 
       <div className="app-body">
+        {/* Mobile Sidebar Overlay Backdrop */}
+        <div
+          className={`sidebar-overlay ${!isSidebarCollapsed ? 'active' : ''}`}
+          onClick={() => setIsSidebarCollapsed(true)}
+        />
+
+
+        {/* Left Navigation Sidebar */}
+        <Sidebar
+          isSidebarCollapsed={isSidebarCollapsed}
+          handleNavClick={handleNavClick}
+          handleSeed={handleSeed}
+          seeding={seeding}
+          health={health}
+          handleOpenProfile={handleOpenProfile}
+        />
 
         {/* Right Main Page Panel */}
         <main className="app-main">

@@ -30,38 +30,6 @@ export default function Dashboard({ stats, graphData, onOpenProfile, onExploreNe
 
   return (
     <div className="dashboard-grid animate-fade-in">
-      {/* COLUMN 1: Profile Summary Card */}
-      <div className="dashboard-profile-card">
-        <div className="profile-card-banner"></div>
-        <div className="profile-card-avatar-container">
-          <div className="profile-card-avatar" onClick={() => onOpenProfile('person_1')}>
-            MM
-          </div>
-        </div>
-        <div className="profile-card-info">
-          <h2 onClick={() => onOpenProfile('person_1')}>Murali Mahi</h2>
-          <p className="profile-card-headline">Machine Learning Engineer</p>
-        </div>
-        <div className="profile-card-stats">
-          <div className="profile-stat-row">
-            <span className="stat-label">Connections</span>
-            <span className="stat-num">{stats.connections}</span>
-          </div>
-          <div className="profile-stat-row">
-            <span className="stat-label">Profile views</span>
-            <span className="stat-num">47</span>
-          </div>
-        </div>
-        <div className="profile-card-skills-preview">
-          <h4>Key Skills</h4>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '6px' }}>
-            <span className="mini-tag">Neo4j</span>
-            <span className="mini-tag">Python</span>
-            <span className="mini-tag">PyTorch</span>
-          </div>
-        </div>
-      </div>
-
       {/* COLUMN 2: Main Feed Column */}
       <div className="dashboard-feed-column">
         {/* Hero Intro banner */}

@@ -93,10 +93,10 @@
   border-color: var(--accent-cyan);
 }
 
-/* Dashboard Layout Grid - 3-Column LinkedIn layout */
+/* Dashboard Layout Grid - 2-Column layout with left sidebar nav */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 225px 1fr 290px;
+  grid-template-columns: 1fr 290px;
   gap: 24px;
   align-items: start;
 }
