@@ -311,29 +311,58 @@ function App() {
       {/* 1. TOPBAR HEADER */}
       <header className="app-topbar">
         <div className="topbar-left">
-          <button className="sidebar-toggle-btn" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
-            <FaBars />
-          </button>
-          <div className="topbar-logo">
+          <div className="topbar-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
             <FaNetworkWired style={{ color: 'var(--accent-cyan)' }} />
             <span>ConnectGraph</span>
           </div>
+          <div className="topbar-search">
+            <input
+              type="text"
+              className="topbar-search-input"
+              placeholder="Search network..."
+              value={searchName}
+              onChange={(e) => {
+                setSearchName(e.target.value);
+                if (location.pathname !== '/people') navigate('/people');
+              }}
+            />
+          </div>
         </div>
 
-        <div className="topbar-search">
-          <input
-            type="text"
-            className="topbar-search-input"
-            placeholder="Search people, interests, skills..."
-            value={searchName}
-            onChange={(e) => {
-              setSearchName(e.target.value);
-              if (location.pathname !== '/people') navigate('/people');
-            }}
-          />
-        </div>
+        <nav className="topbar-nav">
+          <NavLink to="/" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
+            <FaChartBar className="nav-icon" />
+            <span className="nav-label">Home</span>
+          </NavLink>
+          <NavLink to="/people" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
+            <FaUsers className="nav-icon" />
+            <span className="nav-label">People</span>
+          </NavLink>
+          <NavLink to="/graph" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
+            <FaNetworkWired className="nav-icon" />
+            <span className="nav-label">Explorer</span>
+          </NavLink>
+          <NavLink to="/pathfinder" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
+            <FaRoute className="nav-icon" />
+            <span className="nav-label">Paths</span>
+          </NavLink>
+          <NavLink to="/recommendations" className={({ isActive }) => `topbar-nav-link ${isActive ? 'active' : ''}`}>
+            <FaLightbulb className="nav-icon" />
+            <span className="nav-label">Smart Recs</span>
+          </NavLink>
+        </nav>
 
         <div className="topbar-actions">
+          <button
+            className="btn-seed-top"
+            onClick={handleSeed}
+            disabled={seeding}
+            title="Reset and seed graph database with fresh mock profiles"
+          >
+            <FaCog style={{ marginRight: '6px' }} />
+            <span>{seeding ? 'Seeding...' : 'Reset DB'}</span>
+          </button>
+          
           <div className="notification-bell">
             <FaBell />
             <span className="notification-badge" />
@@ -345,18 +374,23 @@ function App() {
                 width: '32px',
                 height: '32px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
+                background: 'linear-gradient(135deg, #0A66C2 0%, #004182 100%)',
                 color: '#ffffff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontWeight: '700',
-                fontSize: '11px'
+                fontSize: '11px',
+                position: 'relative'
               }}
             >
               MM
+              <span
+                className={`status-indicator ${health?.connected ? 'status-connected' : 'status-disconnected'}`}
+                style={{ position: 'absolute', bottom: '-1px', right: '-1px', border: '1.5px solid #ffffff' }}
+              />
             </div>
-            <span>Murali Mahi ▾</span>
+            <span className="profile-name-text">Me ▾</span>
           </div>
         </div>
       </header>
@@ -365,99 +399,6 @@ function App() {
       {/* 2. BODY GRID */}
 
       <div className="app-body">
-        {/* Mobile Sidebar Overlay Backdrop */}
-        <div
-          className={`sidebar-overlay ${!isSidebarCollapsed ? 'active' : ''}`}
-          onClick={() => setIsSidebarCollapsed(true)}
-        />
-
-
-        {/* Left Navigation Sidebar */}
-        <aside className={`app-sidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
-          <nav className="nav-links-list">
-            <NavLink
-              to="/"
-              className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={handleNavClick}
-            >
-              <FaChartBar /> <span>Dashboard</span>
-            </NavLink>
-            <NavLink
-              to="/people"
-              className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={handleNavClick}
-            >
-              <FaUsers /> <span>People</span>
-            </NavLink>
-            <NavLink
-              to="/graph"
-              className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={handleNavClick}
-            >
-              <FaNetworkWired /> <span>Network Explorer</span>
-            </NavLink>
-            <NavLink
-              to="/pathfinder"
-              className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={handleNavClick}
-            >
-              <FaRoute /> <span>Introduction Paths</span>
-            </NavLink>
-            <NavLink
-              to="/recommendations"
-              className={({ isActive }) => `sidebar-tab-btn ${isActive ? 'active' : ''}`}
-              onClick={handleNavClick}
-            >
-              <FaLightbulb /> <span>Recommendations</span>
-            </NavLink>
-          </nav>
-
-
-
-          <div className="sidebar-footer">
-            {/* Bottom Actions */}
-            <button
-              className="sidebar-tab-btn"
-              style={{ padding: '8px 14px', marginBottom: '8px' }}
-              onClick={handleSeed}
-              disabled={seeding}
-            >
-              <FaCog /> <span className="sidebar-footer-text">{seeding ? 'Seeding...' : 'Reset & Seed'}</span>
-            </button>
-            {/* Profile footer avatar with dynamic health indicator dot */}
-            <div
-              onClick={() => handleOpenProfile('person_1')}
-              style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '8px', background: 'rgba(255,255,255,0.06)', borderRadius: '6px' }}
-            >
-              <div style={{ position: 'relative', display: 'inline-block', flexShrink: 0 }}>
-                <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
-                    color: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: '700',
-                    fontSize: '11px'
-                  }}
-                >
-                  MM
-                </div>
-                <span
-                  className={`status-indicator ${health?.connected ? 'status-connected' : 'status-disconnected'}`}
-                  style={{ position: 'absolute', bottom: '-1px', right: '-1px', border: '1.5px solid #0f172a' }}
-                />
-              </div>
-              <div style={{ textAlign: 'left' }} className="sidebar-footer-text">
-                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#ffffff' }}>Murali Mahi</div>
-                <div style={{ fontSize: '10px', color: '#cbd5e1' }}>ML Engineer</div>
-              </div>
-            </div>
-          </div>
-        </aside>
 
         {/* Right Main Page Panel */}
         <main className="app-main">

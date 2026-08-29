@@ -93,12 +93,144 @@
   border-color: var(--accent-cyan);
 }
 
-@media (max-width: 768px) {
-  .dashboard-sections-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+/* Dashboard Layout Grid - 3-Column LinkedIn layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 225px 1fr 290px;
+  gap: 24px;
+  align-items: start;
+}
+
+.dashboard-feed-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Profile Card Styling */
+.dashboard-profile-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-card-banner {
+  height: 56px;
+  background: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
+}
+
+.profile-card-avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-top: -36px;
+}
+
+.profile-card-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  border: 4px solid var(--bg-card);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.profile-card-info {
+  text-align: center;
+  padding: 12px 12px 16px 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.profile-card-info h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.profile-card-info h2:hover {
+  text-decoration: underline;
+}
+
+.profile-card-headline {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.profile-card-stats {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.profile-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.profile-stat-row .stat-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.profile-stat-row .stat-num {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.profile-card-skills-preview {
+  padding: 12px;
+}
+
+.profile-card-skills-preview h4 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.mini-tag {
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: var(--bg-deep);
+  color: var(--text-secondary);
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+}
+
+/* Media Query Adaptations */
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 200px 1fr;
   }
-  
+  .dashboard-trends-column {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-profile-card {
+    display: none;
+  }
   .dashboard-hero-panel {
     padding: 20px;
   }
