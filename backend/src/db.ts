@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 console.log("CWD inside db.ts:", process.cwd());
-const result = dotenv.config();
+const result = dotenv.config({ path: path.join(import.meta.dirname || '', '../.env') });
 console.log("Dotenv config result:", result);
 console.log("Env COGNODB_URI:", process.env.COGNODB_URI);
 

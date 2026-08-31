@@ -156,22 +156,9 @@ ConnectGraph/
 
 ## Setup
 
-### CognoDB Setup
-1. Create a free account at [console.cognodb.com](https://console.cognodb.com).
-2. Spin up a free database instance.
-3. Download the connection credentials file.
-
 ### Environment Variables
-Create a `.env` file inside the `backend/` directory:
-```env
-COGNODB_URI=bolt+s://<instance-id>.databases.cognodb.cloud
-COGNODB_PASSWORD=<your-generated-password>
-PORT=5000
-```
-Create an environment variable in **Vercel** for the frontend:
-```env
-VITE_API_BASE=https://connectgraph-5.onrender.com/api
-```
+Configure the environment variables by copying `backend/.env.example` to `backend/.env` and filling in the credentials.
+
 
 ### Backend Setup
 ```bash
