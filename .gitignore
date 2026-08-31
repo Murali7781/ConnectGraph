@@ -5,6 +5,7 @@ dist/
 # Environment secrets
 backend/.env
 .env
+.env.example
 
 # IDE and system files
 .vscode/
